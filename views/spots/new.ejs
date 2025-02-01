@@ -1,0 +1,94 @@
+<% layout("layouts/boilerplate") %>
+<div class="row">
+  <h1 class="text-center">Create New Spot</h1>
+  <div class="col-md-6 offset-md-3">
+    <div class="card rounded shadow p-3">
+      <form
+        action="/spots"
+        method="POST"
+        novalidate
+        class="validated-form"
+        enctype="multipart/form-data"
+      >
+        <div class="mb-3">
+          <label class="form-label" for="title">Title</label>
+          <input
+            class="form-control"
+            type="text"
+            id="title"
+            name="spot[title]"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="location">Location</label>
+          <input
+            class="form-control"
+            type="text"
+            id="location"
+            name="spot[location]"
+            required
+          />
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <!-- untuk upload image       -->
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Pictures</label>
+          <input
+            class="form-control"
+            type="file"
+            id="image"
+            name="image"
+            multiple
+          />
+        </div>
+
+        <!-- <div class="mb-3">
+        <label class="form-label" for="image">image Url</label>
+        <input
+          class="form-control"
+          type="text"
+          id="image"
+          name="spot[image]"
+          required
+        />
+        <div class="valid-feedback">Looks good!</div>
+      </div> -->
+        <div class="mb-3">
+          <label class="form-label" for="price">Price</label>
+          <div class="input-group">
+            <span class="input-group-text" id="price-label">$</span>
+
+            <input
+              type="text"
+              class="form-control"
+              id="price"
+              placeholder="0.00"
+              aria-label="price"
+              aria-describedby="price-label"
+              name="spot[price]"
+              required
+            />
+            <div class="valid-feedback">Looks good!</div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="description">description</label>
+          <textarea
+            class="form-control"
+            type="text"
+            id="description"
+            name="spot[description]"
+            required
+          ></textarea>
+          <div class="valid-feedback">Looks good!</div>
+        </div>
+        <div class="mb-3">
+          <button class="btn btn-success">Add New Spot</button>
+        </div>
+      </form>
+      <a href="/spots">All Spots</a>
+    </div>
+  </div>
+</div>
