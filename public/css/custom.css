@@ -1,25 +1,51 @@
 /* Override Bootstrap's default colors */
 :root {
-    --bs-primary: #00DDE0 ;  
-    --bs-secondary: #900c3f; /* Dark red */
-    --bs-success: #28a745;   /* Keep success green */
+    --bs-primary: #75D2E0 ;  
+    --bs-secondary: #900c3f; 
+    --bs-success: #60C4AD;   /* Keep success green */
     --bs-info: #17a2b8;      /* Info (teal) */
-    --bs-warning: #ffc107;   /* Warning (yellow) */
-    --bs-danger: #dc3545;    /* Danger (red) */
+    --bs-warning: #ffc107;   
+    --bs-danger: #BA5454;    
     --bs-light: #f8f9fa;     /* Light */
     --bs-dark: #212529;      /* Dark */
   }
 
-  /* .btn-primary{
-    background-color: aqua;
-  } */
-
-  .btn-primary {
+.btn-primary {
     background-color: var(--bs-primary) ;
-    color: #006466;
+    color: #225F6D;
     border-color: var(--bs-primary) ;
 }
 
 .btn-primary:hover{
-    background-color: aqua;
+    background-color: #3AA8C1;
+}
+
+.btn-success {
+    background-color: var(--bs-success);
+    color: #1A4C3A;
+}
+
+.btn-success:hover{
+    background-color: #3EB489;
+}
+
+.btn-danger {
+    background-color: var(--bs-danger);
+}
+
+.back-link{
+    box-shadow: inset 0 0 0 0 #3AA8C1;
+    color: #3AA8C1;
+    /* margin: 0 -.25rem;
+    padding: 0 .25rem; */
+    transition: color .3s ease-in-out, box-shadow .3s ease-in-out;
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 500;
+    
+}
+
+.back-link:hover{
+    box-shadow: inset 153px 0 0 0 #54b3d6;
+    color: white;
 }
