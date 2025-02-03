@@ -1,0 +1,12 @@
+/* Override Bootstrap's default colors */
+:root {
+    --bs-primary: #ff5733;  /* 🔥 Custom funky red-orange */
+    --bs-secondary: #900c3f; /* Dark red */
+    --bs-success: #28a745;   /* Keep success green */
+    --bs-info: #17a2b8;      /* Info (teal) */
+    --bs-warning: #ffc107;   /* Warning (yellow) */
+    --bs-danger: #dc3545;    /* Danger (red) */
+    --bs-light: #f8f9fa;     /* Light */
+    --bs-dark: #212529;      /* Dark */
+  }
+  
