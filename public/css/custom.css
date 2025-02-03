@@ -1,6 +1,6 @@
 /* Override Bootstrap's default colors */
 :root {
-    --bs-primary: #ff5733;  /* 🔥 Custom funky red-orange */
+    --bs-primary: #00DDE0 ;  
     --bs-secondary: #900c3f; /* Dark red */
     --bs-success: #28a745;   /* Keep success green */
     --bs-info: #17a2b8;      /* Info (teal) */
@@ -9,4 +9,17 @@
     --bs-light: #f8f9fa;     /* Light */
     --bs-dark: #212529;      /* Dark */
   }
-  
+
+  /* .btn-primary{
+    background-color: aqua;
+  } */
+
+  .btn-primary {
+    background-color: var(--bs-primary) ;
+    color: #006466;
+    border-color: var(--bs-primary) ;
+}
+
+.btn-primary:hover{
+    background-color: aqua;
+}
