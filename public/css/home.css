@@ -126,7 +126,7 @@ a.cta-btn {
   .navbar-toggler {
     border: none;
     outline: none;
-    background-color: aliceblue;
+    background-color: rgb(17, 127, 223);
   }
 
   .navbar-toggler-icon {
@@ -134,7 +134,7 @@ a.cta-btn {
   }
 
   .navbar-collapse {
-    background: rgba(243, 239, 239, 0.8);
+    background: rgba(229, 130, 130, 0.8);
     padding: 1rem;
     border-radius: 10px;
   }

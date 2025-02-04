@@ -75,7 +75,10 @@ const styleSrcUrls = [
 ];
 const connectSrcUrls = ["https://api.maptiler.com/"];
 
-const fontSrcUrls = [];
+const fontSrcUrls = [
+  "https://cdn.jsdelivr.net",  // Allow Font Awesome from jsDelivr
+  "https://fonts.gstatic.com", // Allow Google Fonts
+];
 app.use(
   helmet.contentSecurityPolicy({
     directives: {
@@ -92,6 +95,8 @@ app.use(
         "data:",
         "https://res.cloudinary.com/dazi1cb6m/",
         "https://api.maptiler.com/",
+        "https://cdn.jsdelivr.net",
+        "https://fonts.gstatic.com",
       ],
       fontSrc: ["'self'", ...fontSrcUrls],
     },
