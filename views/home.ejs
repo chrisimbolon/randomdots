@@ -20,25 +20,26 @@
             <img src="/imgs/logo.png" alt="Randomdots Logo" height="50" />
           </a>
     
-          <!-- Mobile Toggle Button -->
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
+            <!-- Mobile Toggle Button -->
+<button
+class="navbar-toggler"
+type="button"
+data-bs-toggle="collapse"
+data-bs-target="#navbarNav"
+aria-controls="navbarNav"
+aria-expanded="false"
+aria-label="Toggle navigation"
+>
+<span class="navbar-toggler-icon open-icon"></span>
+<span class="close-icon d-none">✖</span>
+
+
+</button>
+
     
           <!-- Navbar Links -->
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-              <!-- <li class="nav-item">
-                <a class="nav-link active" href="#">Home</a>
-              </li> -->
               <li class="nav-item">
                 <a class="nav-link" href="/spots">All Spots</a>
               </li>
@@ -76,6 +77,39 @@
         <p>&copy; randomdots.id 2025</p>
       </footer>
     </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const navbarToggler = document.querySelector(".navbar-toggler");
+        const navbarCollapse = document.querySelector("#navbarNav");
+        const openIcon = document.querySelector(".open-icon");
+        const closeIcon = document.querySelector(".close-icon");
+    
+        navbarToggler.addEventListener("click", function () {
+          const isExpanded = navbarToggler.getAttribute("aria-expanded") === "true";
+    
+          // Bootstrap automatically adds/removes 'show' on .navbar-collapse, so we handle the icons manually
+          if (isExpanded) {
+            openIcon.classList.remove("d-none"); // Show hamburger icon
+            closeIcon.classList.add("d-none"); // Hide close (X) icon
+          } else {
+            openIcon.classList.add("d-none"); // Hide hamburger icon
+            closeIcon.classList.remove("d-none"); // Show close (X) icon
+          }
+        });
+    
+        // Close menu on outside click
+        document.addEventListener("click", function (event) {
+          if (!navbarToggler.contains(event.target) && !navbarCollapse.contains(event.target)) {
+            navbarCollapse.classList.remove("show");
+            navbarToggler.setAttribute("aria-expanded", "false");
+            openIcon.classList.remove("d-none"); // Reset to hamburger icon
+            closeIcon.classList.add("d-none"); // Hide close (X) icon
+          }
+        });
+      });
+    </script>
+        
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   </body>
