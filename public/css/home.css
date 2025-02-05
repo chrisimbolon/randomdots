@@ -123,7 +123,12 @@ a.cta-btn {
   color: #203e5a;
 }
 
-
+.navbar-toggler {
+  position: absolute;
+  top: 10px; /* Adjust as needed */
+  right: 20px; /* Keep it from jumping */
+  z-index: 1060;
+}
 
 /* SMALLER VIEWPORT */
 
@@ -140,11 +145,23 @@ a.cta-btn {
     filter: invert(1);
   } */
 
-  .navbar-collapse {
-    background: rgba(229, 130, 130, 0.8);
-    padding: 1rem;
-    border-radius: 10px;
-  }
+/* Ensure the navbar toggler stays in place */
+.navbar-toggler {
+  position: absolute;
+  top: 20px; /* Adjust as needed */
+  right: 0; /* Keep it from jumping */
+  z-index: 1060;
+}
+
+/* Prevent shifting when menu expands */
+.navbar-collapse {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.9;
+  padding: 1rem;
+  border-radius: 10px;
+}
 
   .navbar-nav {
     text-align: center;
