@@ -11,6 +11,9 @@ body {
 
   background-color: #000; /* Fallback color */
 }
+/* .cover-container {
+  padding-left: 5%;
+} */
 
 .cover-container {
   max-width: 75vw;
@@ -25,7 +28,7 @@ header {
 }
 
 header img {
-  max-height: 50px; /* Adjust size as needed */
+  max-height: 50px;
   margin-left: 0;
   margin-right: 6rem;
 }
@@ -45,7 +48,7 @@ header img {
 
 .navbar {
   width: 100%;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
 }
 
 /* Space Between Logo & Menu */
@@ -75,15 +78,17 @@ header img {
   border-bottom-color: white;
 }
 
+.navbar-nav .nav-item a {
+  white-space: nowrap;
+}
+
+
 .btn-secondary,
 .btn-secondary:hover {
   color: #333;
   text-shadow: none;
 }
 
-.cover-container {
-  padding-left: 5%;
-}
 
 main {
   text-align: left; /* Ensure all text aligns to the left */
@@ -118,20 +123,22 @@ a.cta-btn {
   color: #203e5a;
 }
 
-@media (max-width: 768px) {
+
+
+/* SMALLER VIEWPORT */
+
+@media (max-width: 770px) {
   .navbar {
     padding: 0.5rem;
   }
   
   .navbar-toggler {
-    border: none;
-    outline: none;
     background-color: rgb(17, 127, 223);
   }
 
-  .navbar-toggler-icon {
+  /* .navbar-toggler-icon {
     filter: invert(1);
-  }
+  } */
 
   .navbar-collapse {
     background: rgba(229, 130, 130, 0.8);
