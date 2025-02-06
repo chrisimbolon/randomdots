@@ -7,13 +7,14 @@
 <div class="container">
   <div class="row">
     <% for (let spot of spots) { %>
-      <div class="col-md-6 mb-4"> <!-- Each card takes half of the row -->
-        <div class="card h-100"> <!-- h-100 ensures equal height -->
+      <div class="col-md-6 mb-4"> 
+        <div class="card h-100"> 
           <div class="row no-gutters">
-            <div class="col-md-4">
-              <img class="img-fluid" alt="" src="<%= spot.images[0].url %>" />
+            <div class="col-md-6">
+              <img class="img-fluid" alt="image of some cool spot" 
+     src="<%= spot.images[0].url.replace('/upload/', '/upload/w_400/') %>" />
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
               <div class="card-body">
                 <h5 class="card-title"><%= spot.title %></h5>
                 <p class="card-text"><%= spot.description %></p>

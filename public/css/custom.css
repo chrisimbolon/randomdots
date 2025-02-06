@@ -49,3 +49,10 @@
     box-shadow: inset 153px 0 0 0 #54b3d6;
     color: white;
 }
+ 
+.card img {
+    object-fit: contain;
+    width: 100%; /* or a fixed width */
+    height: 250px; /* Adjust as needed */
+  }
+  

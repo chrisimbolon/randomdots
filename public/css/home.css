@@ -133,12 +133,18 @@ a.cta-btn {
 /* SMALLER VIEWPORT */
 
 @media (max-width: 770px) {
+
+  main {
+    transform: scale(0.9);
+  }
+
   .navbar {
     padding: 0.5rem;
   }
   
   .navbar-toggler {
-    background-color: rgb(17, 127, 223);
+    color: rgb(31, 182, 206);
+    background-color: #FFCB48
   }
 
   /* .navbar-toggler-icon {
@@ -149,7 +155,7 @@ a.cta-btn {
 .navbar-toggler {
   position: absolute;
   top: 20px; /* Adjust as needed */
-  right: 0; /* Keep it from jumping */
+  right: 22px; /* Keep it from jumping */
   z-index: 1060;
 }
 
@@ -158,9 +164,10 @@ a.cta-btn {
   position: absolute;
   top: 100%;
   width: 100%;
-  background: rgba(0, 0, 0, 0.9;
+  background: rgba(0, 0, 0, 0.38);
   padding: 1rem;
   border-radius: 10px;
+  transition: all 0.3s ease-in-out; 
 }
 
   .navbar-nav {
@@ -171,3 +178,27 @@ a.cta-btn {
     margin-bottom: 0.5rem;
   }
 }
+
+@media (max-width: 450px ){
+
+  .cover-container {
+    max-width: 95vw;
+    padding: 0;
+  }
+  
+
+  header img {
+    transform: scale(0.8);
+  }
+
+  main {
+    transform: scale(0.8);
+  }
+
+  .navbar-toggler {
+    right: 35px;
+  }
+
+}
+
+
