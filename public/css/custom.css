@@ -63,6 +63,7 @@
 
 
   .spot-card {
+    /* display: inline-block; */
     display: grid;
     grid-template-rows: auto 1fr auto;
     break-inside: avoid; 
@@ -83,3 +84,16 @@
     padding: 10px;
   }
   
+
+  /* 🌍 RESPONSIVE BREAKPOINTS */
+@media (max-width: 1024px) {
+    .spot-grid {
+      column-count: 2; /* 2 columns for tablets */
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .spot-grid {
+      column-count: 1; /* Single column for mobile */
+    }
+  }
