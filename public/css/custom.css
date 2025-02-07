@@ -50,13 +50,36 @@
     color: white;
 }
  
-.card img {
-    object-fit: contain;
-    width: 100%; /* or a fixed width */
-    height: 250px; /* Adjust as needed */
+  
+  h1{
+    font-weight: 700;
+  }
+
+
+   .spot-grid {
+    column-count: 3;
+    column-gap: 20px;
+  }
+
+
+  .spot-card {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    break-inside: avoid; 
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 30px;
   }
   
-
-  h1{
-    font-weight: 800;
+  .spot-img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
   }
+  
+  .spot-content {
+    padding: 10px;
+  }
+  
