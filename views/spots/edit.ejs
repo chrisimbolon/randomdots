@@ -63,7 +63,7 @@
             name="spot[description]"
             required
           >
-<%= spot.description %></textarea
+            <%= spot.description %></textarea
           >
           <div class="valid-feedback">Looks good!</div>
         </div>
@@ -77,10 +77,10 @@
             multiple
           />
         </div>
-        <!-- untuk delelte image       -->
+        <!-- deleting image       -->
         <div class="mb-3">
           <% spot.images.forEach(function(img, i) { %>
-          <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="" />
+            <img src="<%= img.url.replace('/upload/', '/upload/w_200/f_auto/') %>" class="img-thumbnail" alt="" />
           <div class="form-check-inline">
             <input
               type="checkbox"
