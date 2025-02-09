@@ -8,7 +8,12 @@
   <div class="spot-grid">
     <% for (let spot of spots) { %>
       <div class="spot-card">
-        <img class="spot-img" src="<%= spot.images[0].url.replace('/upload/', '/upload/w_400/') %>" alt="Image of <%= spot.title %>">
+        <% if (spot.images.length > 0) { %>
+          <img class="spot-img" src="<%= spot.images[0].url.replace('/upload/', '/upload/w_400/f_auto/') %>" alt="Image of <%= spot.title %>">
+        <% } else { %>
+          <img class="spot-img" src="/images/default-placeholder.jpg" alt="No image available">
+        <% } %>
+        
         <div class="spot-content">
           <h5><%= spot.title %></h5>
           <p><%= spot.description %></p>
