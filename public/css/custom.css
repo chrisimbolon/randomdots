@@ -42,6 +42,7 @@
     text-decoration: none;
     font-size: 1.25rem;
     font-weight: 500;
+    margin-top: 1.5rem;
     
 }
 
@@ -96,4 +97,8 @@
     .spot-grid {
       column-count: 1; /* Single column for mobile */
     }
+
+   footer {
+    margin-top: 2rem;
+   }
   }
