@@ -61,6 +61,10 @@
     color: #5C5C5C;
   }
 
+  h5{
+    color: #525252;
+  }
+
    .spot-grid {
     column-count: 3;
     column-gap: 20px;
