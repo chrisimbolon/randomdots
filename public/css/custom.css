@@ -57,6 +57,9 @@
     color: #17a2b8;
   }
 
+  p{
+    color: #5C5C5C;
+  }
 
    .spot-grid {
     column-count: 3;
