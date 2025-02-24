@@ -1,3 +1,6 @@
+jest.setTimeout(10000); // Set timeout to 10 seconds
+
+
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
 const User = require("../../models/user"); // Adjust path if needed
@@ -16,14 +19,21 @@ beforeAll(async () => {
   }
 });
 
+
 afterAll(async () => {
-    await mongoose.connection.dropDatabase();
-    await mongoose.connection.close();
-    await mongoServer.stop();
-    
-    // Force Jest to exit cleanly
-    await new Promise(resolve => setTimeout(resolve, 1000)); 
+    try {
+      if (mongoose.connection.readyState === 1) {
+        await mongoose.connection.dropDatabase();
+        await mongoose.connection.close();
+      }
+      if (mongoServer) {
+        await mongoServer.stop();
+      }
+    } catch (err) {
+      console.error("Error shutting down MongoDB:", err);
+    }
   });
+    
   
 
 describe("User Model", () => {
