@@ -75,24 +75,43 @@ describe("Spot Model", () => {
   });
 
   test("should delete associated reviews when spot is deleted", async () => {
+    const user = new User({ username: "testuser", email: "test@example.com" });
+    await user.save();
+  
     const spot = new Spot({ 
       title: "Spot with Review", 
-      geometry: { type: "Point", coordinates: [0, 0] } // Added geometry field
+      geometry: { type: "Point", coordinates: [0, 0] }, // Added geometry field
+      author: user._id,  // Ensure Spot has an author
     });
     await spot.save();
-
-    const review1 = new Review({ text: "Great place!", spot: spot._id });
-    const review2 = new Review({ text: "Awesome!", spot: spot._id });
-
+  
+    // ✅ Fix: Create valid reviews with required fields
+    const review1 = new Review({ 
+      body: "Great place!", 
+      rating: 5, 
+      author: user._id, 
+      spot: spot._id 
+    });
+    const review2 = new Review({ 
+      body: "Awesome!", 
+      rating: 4, 
+      author: user._id, 
+      spot: spot._id 
+    });
+  
     await review1.save();
     await review2.save();
-
-    spot.reviews = [review1._id, review2._id];
+  
+    // ✅ Fix: Properly push reviews into the spot's reviews array
+    spot.reviews.push(review1._id, review2._id);
     await spot.save();
-
+  
+    // Delete the spot
     await Spot.findOneAndDelete({ _id: spot._id });
-
-    const remainingReviews = await Review.find({ _id: { $in: spot.reviews } });
+  
+    // ✅ Fix: Fetch reviews again from DB and check if they're deleted
+    const remainingReviews = await Review.find({ _id: { $in: [review1._id, review2._id] } });
     expect(remainingReviews.length).toBe(0);
   });
+  
 });
