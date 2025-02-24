@@ -1,36 +1,39 @@
 const mongoose = require("mongoose");
 const { MongoMemoryServer } = require("mongodb-memory-server");
-const User = require("../../models/user");
+const User = require("../../models/user"); // Adjust path if needed
 
 let mongoServer;
 
-// 🛠 Setup in-memory MongoDB before running tests
 beforeAll(async () => {
   mongoServer = await MongoMemoryServer.create();
   const mongoUri = mongoServer.getUri();
-  await mongoose.connect(mongoUri, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(mongoUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  }
 });
 
-// 🧹 Cleanup after each test
-afterEach(async () => {
-  await User.deleteMany(); // Clear database after each test
-});
-
-// 🛑 Close DB and stop Mongo server after tests
 afterAll(async () => {
-  await mongoose.connection.close();
-  await mongoServer.stop();
-});
+    await mongoose.connection.dropDatabase();
+    await mongoose.connection.close();
+    await mongoServer.stop();
+    
+    // Force Jest to exit cleanly
+    await new Promise(resolve => setTimeout(resolve, 1000)); 
+  });
+  
 
 describe("User Model", () => {
   it("should create a user successfully", async () => {
     const user = new User({ username: "testuser", email: "test@example.com" });
+    await user.setPassword("password123"); // Passport-local-mongoose method
     const savedUser = await user.save();
 
     expect(savedUser._id).toBeDefined();
+    expect(savedUser.username).toBe("testuser");
     expect(savedUser.email).toBe("test@example.com");
   });
 
@@ -41,16 +44,17 @@ describe("User Model", () => {
   });
 
   it("should enforce unique email", async () => {
-    await new User({ username: "user1", email: "unique@example.com" }).save();
+    await User.create({ username: "user1", email: "unique@example.com" });
 
-    const duplicateUser = new User({ username: "user2", email: "unique@example.com" });
-
-    await expect(duplicateUser.save()).rejects.toThrow();
+    await expect(
+      User.create({ username: "user2", email: "unique@example.com" })
+    ).rejects.toThrow();
   });
 
-  it("should have passport-local-mongoose plugin methods", () => {
-    const user = new User();
-    expect(typeof user.setPassword).toBe("function");
+  it("should have passport-local-mongoose plugin methods", async () => {
+    const user = new User({ username: "testuser", email: "test@example.com" });
+    await user.setPassword("password123");
+
     expect(typeof user.authenticate).toBe("function");
   });
 });
