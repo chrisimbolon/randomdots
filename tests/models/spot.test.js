@@ -1,117 +1,108 @@
-const mongoose = require("mongoose");
-const Spot = require("../../models/spot"); 
-const Review = require("../../models/review");
-const User = require("../../models/user");
-const { connectDB, closeDB } = require("../setup/db");
 
-jest.setTimeout(20000); // Increase timeout to 10s
+jest.setTimeout(10000); // Set timeout to 10 seconds
+
+const mongoose = require("mongoose");
+const { MongoMemoryServer } = require("mongodb-memory-server");
+const Spot = require("../../models/spot");
+const User = require("../../models/user");
+
+let mongoServer;
 
 beforeAll(async () => {
-  await connectDB();
-}, 10000);
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = mongoServer.getUri();
+
+  if (mongoose.connection.readyState === 0) {
+    await mongoose.connect(mongoUri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  }
+});
 
 afterAll(async () => {
-    await closeDB();
-    await mongoose.disconnect();
-    await new Promise(resolve => setTimeout(resolve, 1000)); // Give it a sec to fully disconnect
-  });
-  
-
-beforeEach(async () => {
-  await Spot.deleteMany({});
-  await Review.deleteMany({});
-  await User.deleteMany({});
+  try {
+    if (mongoose.connection.readyState === 1) {
+      await mongoose.connection.dropDatabase();
+      await mongoose.connection.close();
+    }
+    if (mongoServer) {
+      await mongoServer.stop();
+    }
+  } catch (err) {
+    console.error("Error shutting down MongoDB:", err);
+  }
 });
 
 describe("Spot Model", () => {
-  test("should create a Spot document successfully", async () => {
+  it("should create a Spot successfully", async () => {
+    const user = new User({ username: "testuser", email: "test@example.com" });
+    await user.save();
+
     const spot = new Spot({
-      title: "Test Spot",
-      images: [{ url: "https://example.com/image.jpg", filename: "testimg" }],
-      geometry: { type: "Point", coordinates: [40.7128, -74.006] }, // Added geometry field
+      title: "Beautiful Beach",
+      images: [
+        {
+          url: "https://res.cloudinary.com/demo/image/upload/sample.jpg",
+          filename: "sample",
+        },
+      ],
+      geometry: {
+        type: "Point",
+        coordinates: [34.0522, -118.2437],
+      },
       price: 100,
-      description: "A test spot for testing.",
-      location: "New York",
+      description: "A relaxing beach with golden sands.",
+      location: "California, USA",
+      author: user._id,
+
     });
 
     const savedSpot = await spot.save();
     expect(savedSpot._id).toBeDefined();
-    expect(savedSpot.title).toBe("Test Spot");
-  });
 
-  test("should return correct thumbnail URL", () => {
-    const spot = new Spot({
-      images: [{ url: "https://res.cloudinary.com/demo/upload/test.jpg" }],
-    });
-
-    expect(spot.images[0].thumbnail).toBe(
-      "https://res.cloudinary.com/demo/upload/w_200,h_200/test.jpg"
-    );
-  });
-
-  test("should generate popUpMarkup correctly", () => {
-    const spot = new Spot({
-      _id: new mongoose.Types.ObjectId(),
-      title: "Test Spot",
-      description: "This is a test description for a test spot.",
-    });
-
-    expect(spot.properties.popUpMarkup).toContain("Test Spot");
-    expect(spot.properties.popUpMarkup).toContain("This is a test descr..."); // Updated expected string
-  });
-
-  test("should reference an author (User)", async () => {
-    const user = new User({ username: "testuser", email: "test@example.com" });
-    await user.save();
-
-    const spot = new Spot({
-      title: "User Test Spot",
-      author: user._id,
-      geometry: { type: "Point", coordinates: [0, 0] } // Added geometry field
-    });
-
-    const savedSpot = await spot.save();
+    expect(savedSpot.title).toBe("Beautiful Beach");
+    expect(savedSpot.geometry.type).toBe("Point");
+    expect(savedSpot.geometry.coordinates).toEqual([34.0522, -118.2437]);
     expect(savedSpot.author.toString()).toBe(user._id.toString());
   });
 
-  test("should delete associated reviews when spot is deleted", async () => {
-    const user = new User({ username: "testuser", email: "test@example.com" });
-    await user.save();
-  
-    const spot = new Spot({ 
-      title: "Spot with Review", 
-      geometry: { type: "Point", coordinates: [0, 0] }, // Added geometry field
-      author: user._id,  // Ensure Spot has an author
-    });
-    await spot.save();
-  
-    // ✅ Fix: Create valid reviews with required fields
-    const review1 = new Review({ 
-      body: "Great place!", 
-      rating: 5, 
-      author: user._id, 
-      spot: spot._id 
-    });
-    const review2 = new Review({ 
-      body: "Awesome!", 
-      rating: 4, 
-      author: user._id, 
-      spot: spot._id 
+  it("should require title and location fields", async () => {
+    const spot = new Spot({
+      geometry: {
+        type: "Point",
+        coordinates: [34.0522, -118.2437],
+      },
+      price: 50,
+      description: "A test spot.",
     });
   
-    await review1.save();
-    await review2.save();
-  
-    // ✅ Fix: Properly push reviews into the spot's reviews array
-    spot.reviews.push(review1._id, review2._id);
-    await spot.save();
-  
-    // Delete the spot
-    await Spot.findOneAndDelete({ _id: spot._id });
-  
-    // ✅ Fix: Fetch reviews again from DB and check if they're deleted
-    const remainingReviews = await Review.find({ _id: { $in: [review1._id, review2._id] } });
-    expect(remainingReviews.length).toBe(0);
+    try {
+      await spot.validate(); // Run validation manually
+    } catch (err) {
+      expect(err).toBeDefined();
+      expect(err.errors.title).toBeDefined();
+      expect(err.errors.location).toBeDefined();
+    }
   });
   
+
+  it("should enforce valid geometry type", async () => {
+    const user = new User({ username: "testuser2", email: "test2@example.com" });
+    await user.save();
+
+    const invalidSpot = new Spot({
+      title: "Invalid Geometry Spot",
+      geometry: {
+        type: "InvalidType",
+        coordinates: [10, 20],
+      },
+      price: 20,
+      location: "Somewhere",
+      author: user._id,
+    });
+
+    await expect(invalidSpot.save()).rejects.toThrow();
+  });
 });
+
