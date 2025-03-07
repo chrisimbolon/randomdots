@@ -1,23 +1,38 @@
 const mongoose = require("mongoose");
+const { MongoMemoryServer } = require("mongodb-memory-server");
+
+let mongoServer;
 
 const connectDB = async () => {
-  if (mongoose.connection.readyState === 0) {
-    await mongoose.connect("mongodb://127.0.0.1:27017/randomdots_test", {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+  // ✅ Ensure we disconnect from any previous connection first
+  if (mongoose.connection.readyState !== 0) {
+    console.log("Closing existing MongoDB connection...");
+    await mongoose.disconnect();
   }
+
+  // ✅ Start the in-memory MongoDB
+  mongoServer = await MongoMemoryServer.create();
+  const mongoUri = mongoServer.getUri();
+
+  // ✅ Connect to the in-memory MongoDB
+  await mongoose.connect(mongoUri);
+
+  console.log("✅ Connected to in-memory MongoDB");
 };
 
 const closeDB = async () => {
-    try {
-      if (mongoose.connection.readyState === 1) { // Check if connection is open
-        await mongoose.connection.db.dropDatabase();
-      }
-      await mongoose.connection.close();
-    } catch (error) {
-      console.error("Error closing database:", error);
-    }
-  };
+  if (mongoose.connection.readyState !== 0) {
+    console.log("🛑 Dropping in-memory DB...");
+    await mongoose.connection.dropDatabase();
+    await mongoose.connection.close(); // 🔥 Ensure all connections close
+  }
+
+  if (mongoServer) {
+    await mongoServer.stop();
+  }
+
+  console.log("🛑 In-memory MongoDB fully stopped");
+};
+
 
 module.exports = { connectDB, closeDB };
