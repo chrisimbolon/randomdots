@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  mongo:
+    image: mongo:6
+    container_name: randomdots-mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: randomdots # Ensures the DB is created
+
+  app:
+    build: .
+    container_name: randomdots-app
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mongo
+    environment:
+      MONGO_URI: "mongodb://randomdots-mongo:27017/randomdots"
+      NODE_ENV: "production" # Optional, but good for defining env
+
+volumes:
+  mongo_data:
