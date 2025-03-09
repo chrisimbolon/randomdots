@@ -10,7 +10,12 @@ services:
     volumes:
       - mongo_data:/data/db
     environment:
-      MONGO_INITDB_DATABASE: randomdots # Ensures the DB is created
+      MONGO_INITDB_DATABASE: randomdots 
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.runCommand({ ping: 1 })"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
 
   app:
     build: .
@@ -19,10 +24,10 @@ services:
     ports:
       - "3000:3000"
     depends_on:
-      - mongo
-    environment:
-      MONGO_URI: "mongodb://randomdots-mongo:27017/randomdots"
-      NODE_ENV: "production" # Optional, but good for defining env
+      mongo:
+        condition: service_healthy
+    env_file:
+      - .env  
 
 volumes:
   mongo_data:

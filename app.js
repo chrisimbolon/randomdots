@@ -1,7 +1,7 @@
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-}
-console.log(process.env.SECRET);
+require('dotenv').config();
+console.log("MONGO_URI:", process.env.MONGO_URI); // Debug log
+
+// console.log(process.env.SECRET);
 const express = require("express");
 const path = require("path");
 const mongoose = require("mongoose");
@@ -19,13 +19,31 @@ const userRoutes = require("./routes/users");
 const spotRoutes = require("./routes/spots");
 const reviewRoutes = require("./routes/reviews");
 
-mongoose.connect("mongodb://127.0.0.1:27017/randomDots");
+// mongoose.connect("mongodb://127.0.0.1:27017/randomDots");
 
-const db = mongoose.connection;
-db.on("error", console.error.bind(console, "DB Connection Error!"));
-db.once("open", () => {
-  console.log("Database Connected");
-});
+// const db = mongoose.connection;
+// db.on("error", console.error.bind(console, "DB Connection Error!"));
+// db.once("open", () => {
+//   console.log("Database Connected");
+// });
+
+const MONGO_URI = process.env.MONGO_URI || "mongodb://randomdots-mongo:27017/randomdots";
+// console.log("🔍 Checking MONGO_URI:", process.env.MONGO_URI);
+
+
+if (!process.env.MONGO_URI) {
+  console.error("❌ MONGO_URI is missing! Make sure it's set in your environment variables.");
+  process.exit(1);
+}
+
+
+mongoose
+  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log("✅ MongoDB connected successfully!"))
+  .catch((err) => {
+    console.error("❌ DB Connection Error:", err);
+    process.exit(1); // Exit if DB connection fails
+  });
 
 const app = express();
 
@@ -151,6 +169,5 @@ if (process.env.NODE_ENV !== "test") {
     console.log("port 3000 is working");
   });
 }
-
 
 module.exports = app;
