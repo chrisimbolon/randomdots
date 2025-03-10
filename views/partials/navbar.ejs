@@ -19,13 +19,17 @@
         <a class="nav-link" href="/spots/new">New Spot</a>
       </div>
       <div class="navbar-nav ms-auto">
-        <% if(!currentUser) { %>
-        <a class="nav-link" href="/login">Login</a>
-        <a class="nav-link" href="/register">Subscribe</a>
+        <% if (!currentUser) { %>
+          <a class="nav-link" href="/login">Login</a>
+          <a class="nav-link" href="/register">Subscribe</a>
         <% } else { %>
-        <a class="nav-link" href="/logout">Logout</a>
+          <span class="navbar-text text-light me-3">
+            Welcome, <strong><%= currentUser.username %></strong>!
+          </span>
+          <a class="nav-link" href="/logout">Logout</a>
         <% } %>
       </div>
+      
     </div>
   </div>
 </nav>
