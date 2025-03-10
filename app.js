@@ -18,6 +18,7 @@ const helmet = require("helmet");
 const userRoutes = require("./routes/users");
 const spotRoutes = require("./routes/spots");
 const reviewRoutes = require("./routes/reviews");
+const favicon = require("serve-favicon");
 
 // mongoose.connect("mongodb://127.0.0.1:27017/randomDots");
 
@@ -47,6 +48,7 @@ mongoose
 
 const app = express();
 
+app.use(favicon(path.join(__dirname, "public", "imgs", "favicon.ico"))); 
 app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -159,6 +161,8 @@ app.use((err, req, res, next) => {
   if (!err.message) err.message = "Uppsie, somthing not right!";
   res.status(statusCode).render("error", { err });
 });
+
+
 
 // app.listen(3000, () => {
 //   console.log("port 3000 is working");
