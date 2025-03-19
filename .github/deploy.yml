@@ -1,0 +1,45 @@
+name: Deploy Randomdots to Droplet
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1️⃣ Checkout the latest code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # 2️⃣ Set up SSH connection
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # 3️⃣ Connect to droplet and deploy the app
+      - name: Deploy on Droplet
+        run: |
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+            cd /home/apps/randomdots
+
+            echo "Pulling latest changes..."
+            git pull origin main
+
+            echo "Creating/updating .env file..."
+            echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" > .env
+            echo "CLOUDINARY_KEY=${{ secrets.CLOUDINARY_KEY }}" >> .env
+            echo "CLOUDINARY_SECRET=${{ secrets.CLOUDINARY_SECRET }}" >> .env
+            echo "MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }}" >> .env
+            echo "MONGO_URI=mongodb://randomdots-mongo:27017/randomdots" >> .env
+            echo "NODE_ENV=production" >> .env
+
+            echo "Restarting Docker services..."
+            docker compose down
+            docker compose up -d --build
+          EOF
