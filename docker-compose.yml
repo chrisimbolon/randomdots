@@ -16,6 +16,8 @@ services:
       interval: 10s
       retries: 5
       start_period: 10s
+    networks:
+      - caddy-net
 
   app:
     build: .
@@ -31,6 +33,8 @@ services:
         condition: service_healthy
     env_file:
       - .env  
+    networks:
+      - caddy-net
 
   nginx:
     image: nginx:latest
@@ -41,6 +45,12 @@ services:
       - ./public:/usr/share/nginx/html:ro
     depends_on:
       - app
+    networks:
+      - caddy-net
 
 volumes:
   mongo_data:
+
+networks:
+  caddy-net:
+    external: true
