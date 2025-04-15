@@ -42,4 +42,12 @@ jobs:
             echo "Restarting Docker services..."
             docker compose down
             docker compose up -d --build
+
+            echo "Connecting randomdots containers to caddy-net..."
+            docker network connect caddy-net randomdots-app || true
+            docker network connect caddy-net randomdots-nginx || true
+
+            echo "Reloading Caddy to apply new config..."
+            cd /home/apps/caddy
+            docker compose up -d
           EOF
