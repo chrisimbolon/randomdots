@@ -1,10 +1,15 @@
 <% layout('layouts/boilerplate')%>
 
 <div class="container d-flex justify-content-center align-items-center mt-5">
-  <div class="row align-items-center shadow" style="max-width: 900px;">
-    <!-- Left image (visible on large screens only) -->
-    <div class="col-md-6 p-0 d-none d-lg-block">
-      <img src="/imgs/login_reg.webp" alt="Login" class="img-fluid h-100 w-100 object-fit-cover" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;" />
+  <div class="row shadow overflow-hidden w-100" style="max-width: 900px;">
+    <!-- Left image (hidden below lg) -->
+    <div class="col-lg-6 d-none d-lg-block p-0">
+      <img
+        src="/imgs/login_reg.webp"
+        alt="Login"
+        class="img-fluid h-100 w-100 object-fit-cover"
+        style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;"
+      />
     </div>
 
     <!-- Right form card -->
@@ -16,15 +21,15 @@
           <input class="form-control" type="text" id="username" name="username" autofocus required />
           <div class="valid-feedback">Looks good!</div>
         </div>
-    
+
         <div class="mb-3">
           <label class="form-label" for="password">Password</label>
           <input class="form-control" type="password" id="password" name="password" required />
           <div class="valid-feedback">Looks good!</div>
         </div>
-    
+
         <button class="btn btn-success w-100">Login</button>
       </form>
-    </div>    
+    </div>
   </div>
 </div>
