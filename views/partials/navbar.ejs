@@ -21,7 +21,7 @@
       <div class="navbar-nav ms-auto">
         <% if (!currentUser) { %>
           <a class="nav-link" href="/login">Login</a>
-          <a class="nav-link" href="/register">Subscribe</a>
+          <a class="nav-link" href="/register">Register</a>
         <% } else { %>
           <span class="navbar-text text-light me-3">
             Welcome, <strong><%= currentUser.username %></strong>!
