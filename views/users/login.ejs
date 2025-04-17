@@ -3,12 +3,12 @@
 <div class="container d-flex justify-content-center align-items-center mt-5">
   <div class="row align-items-center shadow" style="max-width: 900px;">
     <!-- Left image (visible on large screens only) -->
-    <div class="col-lg-6 p-0 d-none d-lg-block">
+    <div class="col-md-6 p-0 d-none d-lg-block">
       <img src="/imgs/login_reg.webp" alt="Login" class="img-fluid h-100 w-100 object-fit-cover" style="border-top-left-radius: .5rem; border-bottom-left-radius: .5rem;" />
     </div>
 
     <!-- Right form card -->
-    <div class="col-lg-6 col-md-8 mx-auto p-4 bg-white rounded-end">
+    <div class="col-12 col-md-10 offset-md-1 col-lg-6 p-4 bg-white rounded-end">
       <h5 class="mb-4">Login</h5>
       <form action="/login" method="POST" class="validated-form" novalidate>
         <div class="mb-3">
@@ -16,15 +16,15 @@
           <input class="form-control" type="text" id="username" name="username" autofocus required />
           <div class="valid-feedback">Looks good!</div>
         </div>
-
+    
         <div class="mb-3">
           <label class="form-label" for="password">Password</label>
           <input class="form-control" type="password" id="password" name="password" required />
           <div class="valid-feedback">Looks good!</div>
         </div>
-
+    
         <button class="btn btn-success w-100">Login</button>
       </form>
-    </div>
+    </div>    
   </div>
 </div>
