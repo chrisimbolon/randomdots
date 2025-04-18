@@ -39,6 +39,9 @@ jobs:
             echo "NODE_ENV=production" >> .env
 
             echo "Restarting Docker services..."
+
+            export \$(cat .env | xargs)
+
             docker compose down
             docker compose up -d --build
 
