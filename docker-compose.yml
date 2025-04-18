@@ -18,6 +18,8 @@ services:
       interval: 10s
       retries: 5
       start_period: 10s
+    env_file:
+      - .env 
     networks:
       - caddy-net
 
