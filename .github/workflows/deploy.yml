@@ -36,7 +36,10 @@ jobs:
             echo "CLOUDINARY_KEY=${{ secrets.CLOUDINARY_KEY }}" >> .env
             echo "CLOUDINARY_SECRET=${{ secrets.CLOUDINARY_SECRET }}" >> .env
             echo "MAPTILER_API_KEY=${{ secrets.MAPTILER_API_KEY }}" >> .env
-            echo "MONGO_URI=mongodb://randomdots-mongo:27017/randomdots" >> .env
+            echo "MONGO_INITDB_ROOT_USERNAME=${{ secrets.MONGO_INITDB_ROOT_USERNAME }}" >> .env
+            echo "MONGO_INITDB_ROOT_PASSWORD=${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}" >> .env
+            echo "MONGO_INITDB_DATABASE=${{ secrets.MONGO_INITDB_DATABASE }}" >> .env
+            echo "MONGO_URI=mongodb://${{ secrets.MONGO_INITDB_ROOT_USERNAME }}:${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}@randomdots-mongo:27017/${{ secrets.MONGO_INITDB_DATABASE }}?authSource=admin" >> .env
             echo "NODE_ENV=production" >> .env
 
             echo "Restarting Docker services..."

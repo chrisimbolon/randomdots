@@ -172,12 +172,6 @@ app.use((err, req, res, next) => {
   res.status(statusCode).render("error", { err });
 });
 
-
-
-// app.listen(3000, () => {
-//   console.log("port 3000 is working");
-// });
-
 if (process.env.NODE_ENV !== "test") {
   app.listen(3000, () => {
     console.log("port 3000 is working");
