@@ -39,12 +39,22 @@ if (!process.env.MONGO_URI) {
 
 
 mongoose
-  .connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGO_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    dbName: 'randomdots', // <- Add this!
+  })
   .then(() => console.log("✅ MongoDB connected successfully!"))
   .catch((err) => {
     console.error("❌ DB Connection Error:", err);
-    process.exit(1); // Exit if DB connection fails
+    process.exit(1);
   });
+
+
+  mongoose.connection.on("connected", () => {
+    console.log("📡 Connected to MongoDB database:", mongoose.connection.name);
+  });
+   
 
 const app = express();
 
