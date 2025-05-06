@@ -2,6 +2,8 @@
 
 RandomDots is a fullstack web application that visualizes randomly generated points and stores them using a secure backend. Built with Node.js and Express, it connects to MongoDB and Cloudinary, and is deployed with Docker and Caddy for production-ready performance.
 
+Inspired by the idea that the best places are often found through friends, not search results, Randomdots makes it easy to contribute, explore, and revisit favorite spots, one post at a time.
+
 The app includes RESTful API endpoints for managing dot data and uses secure, token-based interaction for storage and retrieval.
 
 ---
