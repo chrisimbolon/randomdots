@@ -20,13 +20,6 @@ const spotRoutes = require("./routes/spots");
 const reviewRoutes = require("./routes/reviews");
 const favicon = require("serve-favicon");
 
-// mongoose.connect("mongodb://127.0.0.1:27017/randomDots");
-
-// const db = mongoose.connection;
-// db.on("error", console.error.bind(console, "DB Connection Error!"));
-// db.once("open", () => {
-//   console.log("Database Connected");
-// });
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb://randomdots-mongo:27017/randomdots";
 // console.log("🔍 Checking MONGO_URI:", process.env.MONGO_URI);
