@@ -22,8 +22,6 @@ const favicon = require("serve-favicon");
 
 
 const MONGO_URI = process.env.MONGO_URI || "mongodb://randomdots-mongo:27017/randomdots";
-// console.log("🔍 Checking MONGO_URI:", process.env.MONGO_URI);
-
 
 if (!process.env.MONGO_URI) {
   console.error("❌ MONGO_URI is missing! Make sure it's set in your environment variables.");
@@ -35,7 +33,7 @@ mongoose
   .connect(MONGO_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    dbName: 'randomdots', // <- Add this!
+    dbName: 'randomdots', 
   })
   .then(() => console.log("✅ MongoDB connected successfully!"))
   .catch((err) => {
@@ -99,8 +97,8 @@ const styleSrcUrls = [
 const connectSrcUrls = ["https://api.maptiler.com/"];
 
 const fontSrcUrls = [
-  "https://cdn.jsdelivr.net",  // Allow Font Awesome from jsDelivr
-  "https://fonts.gstatic.com", // Allow Google Fonts
+  "https://cdn.jsdelivr.net",  
+  "https://fonts.gstatic.com", 
 ];
 app.use(
   helmet.contentSecurityPolicy({
