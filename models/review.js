@@ -3,12 +3,12 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema({
-  body: { type: String, required: true }, // ✅ Enforce required field
-  rating: { type: Number, required: true }, // ✅ Enforce required field
+  body: { type: String, required: true }, // Enforcing required field
+  rating: { type: Number, required: true }, // Enforcing required field
   author: {
     type: Schema.Types.ObjectId,
     ref: "User",
-    required: true, // ✅ Enforce author reference
+    required: true, //  Enforcing author reference
   },
 });
 
